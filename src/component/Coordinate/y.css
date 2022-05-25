@@ -1,0 +1,12 @@
+.y {
+  display: flex;
+  position: absolute;
+  top: 87px;
+  left: 283px;
+}
+.y .number {
+  width: 31px;
+  height: 31px;
+  text-align: center;
+  line-height: 31px;
+}
