@@ -1,14 +1,29 @@
 import React from 'react'
-import {Link ,Outlet} from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
+import { Button, Layout } from 'antd'
 export default function App() {
+
+  const { Header, Footer, Sider, Content } = Layout;
   return (
     <>
-    <div>
-    <Link to='/19lu' state={{length: 19}}>19路</Link>
-    <Link to='/19lu' state={{length: 13}}>13路</Link>
-    <Link to='/19lu' state={{length: 9}}>9路</Link>
-    </div>
-    <Outlet />
+      <Layout>
+        <Header>
+          <Link to='/19lu' state={{ length: 19 }}>
+            <Button type="dashed">19路</Button>
+          </Link>
+          <Link to='/19lu' state={{ length: 13 }}>
+            <Button type="dashed">13路</Button>
+          </Link>
+          <Link to='/19lu' state={{ length: 9 }}>
+            <Button type="dashed">9路</Button>
+          </Link>
+        </Header>
+        <Layout>
+          <Content><Outlet /></Content>
+        </Layout>
+        <Footer>Footer</Footer>
+      </Layout>
+
     </>
   )
 }

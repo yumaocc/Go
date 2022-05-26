@@ -292,21 +292,23 @@ function App(props) {
   //     setPieces(newPieces)
   //   }
   // }
+  //清除没有气的棋子
   const needUpdateQi = () => {
     const noQiKeys = blocksRef.current.black.ps
     for (const key in noQiKeys) {
       if (Object.hasOwnProperty.call(noQiKeys, key)) {
-        const e = noQiKeys[key];
+        const e = JSON.parse(JSON.stringify(noQiKeys[key]))
         if (!e.hasQi) {
+          //将没有气的棋子从blocksRef中删掉
+          delete noQiKeys[key]
           e.items.map(e => {
-            let x = e.x
-            let y = e.y
-            pieces[y][x].done = false
+            pieces[e.y][e.x].done = false
             setPieces(pieces)
           })
         }
       }
     }
+    
   }
 
   return (
@@ -320,6 +322,7 @@ function App(props) {
                   <div key={i + index + ''} className={'pieces' + play} >
                     <div className={e.done ? e.color + play : 'dots' + play} onClick={() => {
                       pickBlocks(pieces)
+                      console.log(blocksRef,'砌块')
                       needUpdateQi()
                       console.log(blocksRef.current, '要被吃掉的棋子')
                       const x = i
