@@ -1,43 +1,140 @@
-.App .content {
+.App .content19 {
   width: 590px;
   display: flex;
   flex-wrap: wrap;
   position: absolute;
-  top: 108px;
-  left: 283px;
+  top: 15px;
+  left: 15px;
+  box-sizing: border-box;
 }
-.App .content .pieces {
-  width: 30px;
-  height: 30px;
+.App .content19 .pieces19 {
+  width: 31px;
+  height: 31px;
   justify-content: center;
   align-items: center;
-  border-right: 1px solid rgba(1, 1, 1, 0);
-  border-top: 1px solid rgba(1, 1, 1, 0);
+  box-sizing: border-box;
 }
-.App .content .pieces .dots {
+.App .content19 .pieces19 .dots19 {
   width: 25px;
   height: 25px;
   border-radius: 50%;
   margin: 2px auto;
+  box-sizing: border-box;
 }
-.App .content .pieces .black {
+.App .content19 .pieces19 .black19 {
   width: 25px;
   height: 25px;
   border-radius: 50%;
   margin: 2px auto;
   color: white;
   background-color: black;
+  box-sizing: border-box;
 }
-.App .content .pieces .white {
+.App .content19 .pieces19 .white19 {
   width: 25px;
   height: 25px;
   border-radius: 50%;
   margin: 2px auto;
   background-color: white;
 }
-.App .content .pieces .p {
+.App .content19 .pieces19 .p {
   font-size: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.App .content13 {
+  width: 403px;
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  box-sizing: border-box;
+}
+.App .content13 .pieces13 {
+  width: 31px;
+  height: 31px;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+.App .content13 .pieces13 .dots13 {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin: 2px auto;
+  box-sizing: border-box;
+}
+.App .content13 .pieces13 .black13 {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin: 2px auto;
+  color: white;
+  background-color: black;
+  box-sizing: border-box;
+}
+.App .content13 .pieces13 .white13 {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin: 2px auto;
+  background-color: white;
+}
+.App .content13 .pieces13 .p {
+  font-size: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.App .content9 {
+  width: 279px;
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  box-sizing: border-box;
+}
+.App .content9 .pieces9 {
+  width: 31px;
+  height: 31px;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+.App .content9 .pieces9 .dots9 {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin: 2px auto;
+  box-sizing: border-box;
+}
+.App .content9 .pieces9 .black9 {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin: 2px auto;
+  color: white;
+  background-color: black;
+  box-sizing: border-box;
+}
+.App .content9 .pieces9 .white9 {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin: 2px auto;
+  background-color: white;
+}
+.App .content9 .pieces9 .p {
+  font-size: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.App .test {
+  position: absolute;
+  left: -200px;
+  top: 100px;
 }

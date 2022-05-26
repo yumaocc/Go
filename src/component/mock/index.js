@@ -1503,22 +1503,24 @@ const testQi = [
     ]
 ]
 
-const createPieces = (n)=>{
-    const r = new Array(19)
-    for (let y = 0; y < n; y++) {
-        r[y] = new Array(19)
-        for (let x = 0; x < n; x++) {
-            r[y][x] = {
-                x,
-                y,
+const createPieces = (n) => {
+    var arr = new Array(n);
+    for (let i = 0; i < arr.length; i++) {
+        arr[i] = new Array(n).fill(0);
+    }
+    for (let x = 0; x < arr.length; x++) {
+        const element = arr[x];
+        for (let y = 0; y < element.length; y++) {
+            element[y] = {
+                'x': x,
+                'y': y
             }
         }
     }
-    console.log('r =',r)
-    return r
+    return arr
 }
 // const testQi = createPieces(19)
-console.log('testQi', testQi)
 export {
-    testQi
+    testQi,
+    createPieces
 }

@@ -1,17 +1,50 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import './app.css'
 
 const cloneDeep = (data) => {
   const r = JSON.parse(JSON.stringify(data))
   return r
 }
+// blocks 代表棋块。  
+// 
+const blocks = {
+  black: {
+    q: 0,
+    ps: {
+      '2_3': {
+        hasQi: true,
+        items: [
+          {
+            x: 2,
+            y: 3
+          },
+          {
+            x: 3,
+            y: 3
+          },
+        ]
+      }
+    }
+  },
+  white: {
+
+  },
+}
 
 function App(props) {
-  const {testQi} = props
+  const { testQi, createPieces, play } = props
   const [color, setColor] = useState('black')
-
-
+  const blocksRef = useRef({
+    black: {
+      ps: {}
+    },
+    white: {
+      ps: {}
+    },
+  })
   const [pieces, setPieces] = useState([...testQi])
+  // const [blocks, setBlocks] = useState({})
+
   window.pieces = pieces
 
 
@@ -25,114 +58,207 @@ function App(props) {
   // }
 
 
-  // const findS = (ps, p, y, x)=>{
-  //   const right = pieces[y][x + 1]
-  //   const left = pieces[y][x - 1]
-  //   const bottom = pieces[y + 1][x]
-  //   const top = pieces[y - 1][x]
-  //   if( right && right.done && right.color === p.color){
-  //     ps.push(right)
-  //     findS(ps,right, y, x + 1)
-  //   }
-  //   // if( left && left.done && left.color === p.color){
-  //   //   ps.push(left)
-  //   //   findS(ps,left, y, x - 1)
-  //   // }
-  //   if(bottom && bottom.done && bottom.color === p.color){
-  //     ps.push(bottom)
-  //     findS(ps,bottom, y + 1, x)
-  //   }
-  //   // if(top && top.done && top.color === p.color){
-  //   //   ps.push(top)
-  //   //   findS(ps,top, y - 1, x)
-  //   // }
-
-  // }
-
-  // // 检测一颗棋子是否有气
-  // const checkQi = (p, youqi, wuqi)=>{
+  const findS = (ps, p, y, x) => {
+    const right = pieces[y][x + 1]
+    // const left = pieces[y][x - 1]
+    const bottom = pieces[y + 1][x]
+    // const top = pieces[y - 1][x]
+    if (right && right.done && right.color === p.color) {
+      ps.push(right)
+      findS(ps, right, y, x + 1)
+    }
+    // if( left && left.done && left.color === p.color){
+    //   ps.push(left)
+    //   findS(ps,left, y, x - 1)
+    // }
+    if (bottom && bottom.done && bottom.color === p.color) {
+      ps.push(bottom)
+      findS(ps, bottom, y + 1, x)
+    }
+    // if(top && top.done && top.color === p.color){
+    //   ps.push(top)
+    //   findS(ps,top, y - 1, x)
+    // }
+  }
+  //原本的
+  // 检测一颗棋子是否有气
+  // const checkQi = (p) => {
   //   // for (let i = 0; i < ps.length; i++) {
   //   //   const p = ps[i];
   //   //   const {x, y} = p
   //   // }
-  //   const {x, y, color} = p
+  //   console.log(p,'checkQi')
+  //   const { x, y, color } = p
   //   const key = `${x}-${y}`
-  //   if(youqi[key]){
-  //     return true
-  //   }
-  //   if(wuqi[key]){
-  //     return false
-  //   }
-
-  //   const top = pieces[y-1][x]
+  //   const top = pieces[y - 1][x]
   //   const bottom = pieces[y + 1][x]
   //   const right = pieces[y][x + 1]
   //   const left = pieces[y][x - 1]
 
-  //   if(!top.done || !bottom.done || !left.done || !right.done){
-  //     console.log('qi 1')
-  //     const key = `${x}-${y}`
-  //     youqi[key] = true
+  //   if (!top.done || !bottom.done || !left.done || !right.done) {
   //     return true
   //   }
-  //   let leftQi = false
   //   let rightQi = false
-  //   let topQi = false
   //   let bottomQi = false
-  //   if( left.done && left.color === color){
-  //     const key = `${x-1}-${y}`
-  //     if(youqi[key]){
-  //       leftQi =  true
-  //     }else if(wuqi[key]){
-  //       leftQi =  false
-  //     }else{
-  //       leftQi = checkQi(left, youqi, wuqi)
-  //     }
+
+  //   if (right.done && right.color === color) {
+  //     const key = `${x + 1}-${y}`
+  //     rightQi = checkQi(right)
   //   }
-  //   if( right.done &&  right.color === color){
-  //     // rightQi = checkQi(right,  youqi, wuqi)
-  //     const key = `${x+1}-${y}`
-  //     if(youqi[key]){
-  //       rightQi =  true
-  //     }else if(wuqi[key]){
-  //       rightQi =  false
-  //     }else{
-  //       rightQi = checkQi(right, youqi, wuqi)
-  //     }
+  //   if (bottom.done && bottom.color === color) {
+  //     bottomQi = checkQi(bottom)
   //   }
-  //   if( top.done && top.color === color){
-  //     //  topQi = checkQi(top, youqi, wuqi)
-  //      const key = `${x}-${y - 1}`
-  //     if(youqi[key]){
-  //       topQi =  true
-  //     }else if(wuqi[key]){
-  //       topQi =  false
-  //     }else{
-  //       topQi = checkQi(top, youqi, wuqi)
-  //     }
-  //   }
-  //   if( bottom.done &&  bottom.color === color){
-  //     // bottomQi = checkQi(bottom,  youqi, wuqi)
-  //     const key = `${x}-${y + 1}`
-  //     if(youqi[key]){
-  //       bottomQi =  true
-  //     }else if(wuqi[key]){
-  //       bottomQi =  false
-  //     }else{
-  //       bottomQi = checkQi(bottom, youqi, wuqi)
-  //     }
-  //   }
-  //   console.log('qi 2', leftQi, rightQi)
-  //   const hasQi = leftQi || rightQi || topQi || bottom
-  //   if(hasQi){
-  //     youqi[`${x}-${y}`] = true
-  //   }else{
-  //     wuqi[`${x}-${y}`] = true
-  //   }
+  //   const hasQi = bottomQi || rightQi
+  //   console.log('hasQi==', key, hasQi)
   //   return hasQi
   // }
+  const checkQi = (p) => {
+    // for (let i = 0; i < ps.length; i++) {
+    //   const p = ps[i];
+    //   const {x, y} = p
+    // }
+
+    const { x, y, color } = p
+    const key = `${p.x}-${p.y}`
+    const top = pieces[y - 1][x]
+    const bottom = pieces[y + 1][x]
+    const right = pieces[y][x + 1]
+    const left = pieces[y][x - 1]
+    if (!top.done || !bottom.done || !left.done || !right.done) {
+      return true
+    }
+    let rightQi = false
+    let bottomQi = false
+
+    if (right.done && right.color === color) {
+      const key = `${x + 1}-${y}`
+      rightQi = checkQi(right)
+    }
+    if (bottom.done && bottom.color === color) {
+      bottomQi = checkQi(bottom)
+    }
+    const hasQi = bottomQi || rightQi
+    console.log('hasQi==', key, hasQi)
+    return hasQi
+  }
 
 
+
+  // const checkBlocksQi = (ps)=>{
+  //   for (let index = 0; index < blackKeys.length; index++) {
+  //     const blackXy = blackKeys[index];
+  //     const items = black.ps[blackXy]
+  //     checkQi(items[0])
+  //   }
+  // }
+  //原本的
+  // const setBlocksQ = () => {
+  //   const blocks = blocksRef.current
+  //   const { black, white } = blocks
+  //   const qs = {}
+  //   const blackKeys = Object.keys(black.ps)
+  //   const whiteKeys = Object.keys(white.ps)
+  //   for (let index = 0; index < blackKeys.length; index++) {
+  //     const xy = blackKeys[index];
+  //     const items = black.ps[xy]
+  //     const q = checkQi(items[0])
+  //     qs[xy] = q
+  //   }
+
+  //   for (let index = 0; index < whiteKeys.length; index++) {
+  //     const xy = whiteKeys[index];
+  //     const items = white.ps[xy]
+  //     const q = checkQi(items[0])
+  //     qs[xy] = q
+  //   }
+  //   console.log('qs', qs)
+  //   return qs
+  // }
+
+  const setBlocksQ = () => {
+    const blocks = blocksRef.current
+    const { black, white } = blocks
+    const qs = {}
+
+    const blackKeys = Object.keys(black.ps)
+    const whiteKeys = Object.keys(white.ps)
+    console.log('black = ', blackKeys, 'white = ', whiteKeys)
+    for (let index = 0; index < blackKeys.length; index++) {
+      const xy = blackKeys[index];
+      const items = black.ps[xy].items
+      console.log('items =', items)
+      const q = checkQi(items[0])
+      qs[xy] = q
+    }
+
+    for (let index = 0; index < whiteKeys.length; index++) {
+      const xy = whiteKeys[index];
+      const items = white.ps[xy]
+
+      const q = checkQi(items[0])
+      qs[xy] = q
+    }
+    console.log('qs', qs)
+    return qs
+  }
+  const isFindItem = (items, p) => {
+    const isFindP = items.find((i) => {
+      const r = i.x === p.x && i.y === p.y
+      return r
+    })
+    return isFindP
+  }
+
+  const isPInBlocks = (p) => {
+    const { color = 'white' } = p
+    const bs = blocksRef.current[color] || {}
+    const ps = bs.ps || {}
+    const psKeys = Object.keys(ps)
+    for (let index = 0; index < psKeys.length; index++) {
+      const blockXy = psKeys[index];
+      const items = ps[blockXy].items
+      const [x, y] = blockXy.split('-')
+      if (x === p.x && y === p.y) {
+        return true
+      }
+      const isFindOne = isFindItem(items, p)
+      if (isFindOne) {
+        return isFindOne
+      }
+    }
+    return false
+  }
+
+  const pickBlocks = (ps) => {
+    for (let y = 0; y < ps.length; y++) {
+      const line = ps[y];
+      for (let x = 0; x < line.length; x++) {
+        const p = line[x];
+        if (p.done && !isPInBlocks(p)) {
+          const ps = [p]
+          findS(ps, p, y, x)
+          console.log('x:y', x, y)
+          console.log(ps)
+          const k = `${x}-${y}`
+          blocksRef.current[p.color].ps[k] = {
+            items: ps
+          }
+          const hasQi = checkQi(p)
+          blocksRef.current[p.color].ps[k].hasQi = hasQi
+        }
+      }
+    }
+
+  }
+
+  const pickOutPiece = () => {
+
+    const blocks = setBlocksQ()
+    const keys = Object.keys(blocks)
+    for (let index = 0; index < keys.length; index++) {
+      const k = keys[index];
+    }
+  }
 
   // const deadCheck = (ps)=> {
   //   const deadList = []
@@ -166,30 +292,46 @@ function App(props) {
   //     setPieces(newPieces)
   //   }
   // }
-
+  const needUpdateQi = () => {
+    const noQiKeys = blocksRef.current.black.ps
+    for (const key in noQiKeys) {
+      if (Object.hasOwnProperty.call(noQiKeys, key)) {
+        const e = noQiKeys[key];
+        if (!e.hasQi) {
+          e.items.map(e => {
+            let x = e.x
+            let y = e.y
+            pieces[y][x].done = false
+            setPieces(pieces)
+          })
+        }
+      }
+    }
+  }
 
   return (
     <div className="App">
-      <div className='bg'>
-        <div className='content'>
+      <div className={'bg' + play}>
+        <div className={'content' + play}>
           {
             pieces.map((items, index) => {
               return items.map((e, i) => {
                 return (
-                  <div key={i + index + ''} className={'pieces'} >
-
-                    <div className={e.done ? e.color + ' p' : 'dots'} onClick={() => {
+                  <div key={i + index + ''} className={'pieces' + play} >
+                    <div className={e.done ? e.color + play : 'dots' + play} onClick={() => {
+                      pickBlocks(pieces)
+                      needUpdateQi()
+                      console.log(blocksRef.current, '要被吃掉的棋子')
                       const x = i
                       const y = index
                       // console.log('x y', x, y)
                       const newPieces = cloneDeep(pieces)
                       const p = newPieces[y][x]
-                      if (!e.color) {
+                      if (!e.done) {
                         p.done = true
                         p.color = color
                         setPieces(newPieces)
                       }
-
                       if (window.m === 0) {
                         setColor('black')
                         p.color = 'black'
@@ -204,9 +346,9 @@ function App(props) {
                       // deadCheck(newPieces)
                       const newColor = color === 'white' ? 'black' : 'white'
                       setColor(newColor)
-                      // dieOrLive(index,i)
+                      // pickBlocks(pieces)
                     }}>
-
+                      {e.done && `${i}:${index}`}
                     </div>
                   </div>
                 )
@@ -215,6 +357,20 @@ function App(props) {
           }
         </div>
       </div>
+      <div className='test'>
+        <button onClick={() => {
+          pickBlocks(pieces)
+        }}> 计算棋块 </button>
+
+        <button onClick={() => {
+          setBlocksQ()
+        }}> 计算气 </button>
+
+        <button onClick={() => {
+          pickOutPiece()
+        }}> 提子 </button>
+      </div>
+
     </div>
 
   );
